@@ -1,3 +1,41 @@
 #include<stdio.h>
 
 int main(){
+int n,i,j,f,e=0;
+int arry[n][n];
+//read the distance of the square arry//
+printf("Enter the distance of the arry:\n");
+scanf("%d",&n);//n is for the distance//
+//read the elements of arry//
+for(i=0;i<n;i++){
+for(j=0;j<n;j++){
+printf("Enter the element %d of the arry:\n",e++);
+scanf("%d",&arry[i][j]);
+}
+}
+//print the arry//
+printf("The full arry:\n");
+for(i=0;i<n;i++){
+for(j=0;j<n;j++){
+printf("%d",arry[i][j]);
+}
+}
+printf("\n");
+//swap the lower and the upper triangle//
+for(i=0;i<n;i++){
+for(j=i+1;j<n;j++){
+f=arry[i][j];
+arry[i][j]=arry[j][i];
+arry[j][i]=f;
+}
+}
+//print the final arry//
+printf("the arry after swap the lower and upper tringle");
+for(i=0;i<n;i++){
+for(j=0;j<n;j++){
+printf("%d",arry[i][j]);
+}
+}
+printf("\n");
+return0;
+}
