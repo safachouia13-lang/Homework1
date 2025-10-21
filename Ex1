@@ -37,5 +37,5 @@ printf("%d",arry[i][j]);
 }
 }
 printf("\n");
-return0;
+return 0;
 }
