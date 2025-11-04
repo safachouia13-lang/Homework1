@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+//تعريفات الدوال
+char *LoadString(int N) {//دالة تحميل النص
+    //نحجز مكان في الذاكرة
+    char *str = (char *)malloc((N + 1) * sizeof(char));
+    //التأكد من نجاح الحجز
+    if(str == NULL) {
+        printf("Error: Memory allocation failed!\n");
+        return NULL;
+    }
+    printf("Enter a string (max %d characters): ", N);
+    scanf("%s", str);
+    return str;
+}
+
+int StringLength(char *str) {//دالة حساب الطول
+    int length = 0;
+    //نحسب عدد الحروف حتى نصل لنهاية النص
+    while(str[length] != '\0') {
+        length++;
+    }
+    return length;//عدد حروف النص
+}
+
+void LoadArray(char *p, char arr[]) {//دالة تحميل المصفوفة
+    int i = 0;
+    //ننسخ كل حرف من المؤشر إلى المصفوفة
+    while(p[i] != '\0') {
+        arr[i] = p[i];
+        i++;
+    }
+    arr[i] = '\0'; //نهاية النص
+}
+
+void ReverseArray(char arr[], char rev[], int n) {//دالة عكس المصفوفة
+    int i;
+    //نعكس الحروف ونخزنهم في المصفوفة الجديدة
+    for(i = 0; i < n; i++) {
+        rev[i] = arr[n - 1 - i];
+    }
+    rev[n] = '\0'; //نهاية النص
+}
+
+void DisplayArray(char arr[], int n) {//دالة عرض المصفوفة
+    int i;
+    // نطبع كل حرف في المصفوفة
+    for(i = 0; i < n; i++) {
+        printf("%c", arr[i]);
+    }
+    printf("\n");
+}
+
+int SumStringASCII(char *p) {//دالة جمع قيم ASCII
+    //إذا وصلنا لنهاية النص نرجع صفر
+    if(*p == '\0') {
+        return 0;
+    }
+    //قيمة الحرف الحالي + مجموع بقية الحروف
+    return *p + SumStringASCII(p + 1);
+}
+
+void ReverseString(char *start, char *end) {//دالة عكس النص
+    //إذا تقابل المؤشران أو تخطوا بعض نتوقف
+    if(start >= end) {
+        return;
+    }
+    
+    //نبدل بين الحرفين
+    char temp = *start;
+    *start = *end;
+    *end = temp;
+    //نكمل مع بقية الحروف
+    ReverseString(start + 1, end - 1);
+}
+int main() {
+  char *str;//مؤشر للنص الذي سندخله
+  int n;//طول النص الأقصى
+
+    //طلب إدخال الطول الأقصى للنص من المستخدم
+    printf("Enter maximum string size: ");
+    scanf("%d", &n);
+    
+    //طلب إدخال النص من المستخدم
+    printf("Enter a string (max %d characters): ", n);
+  str = LoadString(n); //استدعاء دالة تحميل النص
+    
+  //حساب طول النص الفعلي
+  int len = StringLength(str);
+    printf("String length: %d\n", len);
+    
+  //إنشاء مصفوفتين: واحدة للنص الأصلي والأخرى للنص المعكوس
+  char arr[len + 1], rev[len + 1];
+    
+  //تحميل النص من المؤشر إلى المصفوفة
+  LoadArray(str, arr);
+    printf("Original array: ");
+  DisplayArray(arr, len);
+    
+  //عكس النص وحفظه في مصفوفة جديدة
+  ReverseArray(arr, rev, len);
+    printf("Reversed array: ");
+  DisplayArray(rev, len);
+    
+  //لحروف المصفوفة ASCII حساب مجموع قيم 
+  int sum = SumStringASCII(str);
+    printf("Sum of ASCII values: %d\n", sum);
+    
+  //عكس النص في مكانه
+  ReverseString(str, str + len - 1);
+    printf("String reversed recursively: %s\n", str);
+    
+  // تحرير الذاكرة التي حجزناها
+  free(str);
+    
+    printf("Program completed successfully!\n");
+    return 0;
+}
