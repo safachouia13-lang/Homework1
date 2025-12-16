@@ -76,8 +76,8 @@ void freeList(Node *head) {
 }
 int main() {
     Node *head = createEmptyList();  // نبدأ بقائمة فارغة//
-    P1 ={1,"milk",50};
-    P2 ={2,"sugar",80};
+    Product p1 = {1 ,"milk", 50};
+    Product p2 = {2 ,"sugar", 80};
     head = insertAtBeginning(head,p1);// إدراج في البداية//
     head = insertAtEnd(head,p2);// إدراج في النهاية//
     printf("the list:\n");
