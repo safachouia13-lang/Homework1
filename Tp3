@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//تعريف نوع Node وProduct
+//تعريف نوع Node وProduct//
 typedef struct Product {
     int ID;
     char Name[20];
@@ -11,56 +11,41 @@ typedef struct Node {
     Product Prod;
     struct Node *next;
 } Node;
-//إنشاء قائمة فارغة
-//للإشارة إلى أول عنصر نستخدم المؤشر head
+//إنشاء قائمة فارغة//
+//للإشارة إلى أول عنصر نستخدم المؤشر head//
 Node* createEmptyList() {
     return NULL;
 }
-//فحص إن كانت القائمة فارغة
+//فحص إن كانت القائمة فارغة//
 int isEmpty(Node *head) {
     return head == NULL;
 }
-//إدراج عنصر في بداية القائمة
+//إدراج عنصر في بداية القائمة//
 //نضيف عقدة جديدة ونعدّل روابط النهاية بحيث تشير إلى العنصر الجديد كبداية//
 Node* insertAtBeginning(Node *head, Product p) {
-//تخصيص عقدة جديدة
-    Node *newNode = (Node*) malloc(sizeof(Node));
+    Node *newNode = (Node*) malloc(sizeof(Node));//تخصيص عقدة جديدة//
     if (newNode == NULL) { //تحقق من نجاح التخصيص//
         printf("Memory allocation failed\n");
-        exit(1);
+        return head;
     }
-    newNode->Prod = p;// نسخ بيانات المنتج في العقدة الجديدة
-    if (head == NULL) {
-        newNode->next = newNode;//القائمة كانت فارغة -> العقدة الجديدة تشير لنفسها
-        return newNode;// العقدة الجديدة تصبح head
+    newNode->Prod = p;// نسخ بيانات المنتج في العقدة الجديدة//
+    if (head == NULL) {//في حالة القائمة فارغة
+        newNode->next = newNode;// العقدة الجديدة تشير لنفسها//
+        return newNode;// العقدة الجديدة تصبح head//
     }
-    Node *temp = head;
-    while (temp->next != head) { //نحرك آخر حتى نصل للعقدة التي تشير للبداية
-        temp = temp->next;
-    }
-    newNode->next = head;// الجديد يشير للبداية القديمة
-    temp->next = newNode;// آخر الآن يشير للجديد (الذي صار بداية)
-    head = newNode;
-    return head;
-}
 //إدراج عنصر في نهاية القائمة الدائرية
 Node* insertAtEnd(Node *head, Product p) {
-    Node *newNode = (Node*) malloc(sizeof(Node));
+    Node *newNode = (Node*) malloc(sizeof(Node));//إنشاء عقدة جديدة//
     if (newNode == NULL) {
         printf("Memory allocation failed\n");
-        exit(1);
+        return head;
     }
-    newNode->Prod = p;
-    if (head == NULL) {
-        newNode->next = newNode;
-        return newNode;
-    }
-    //إيجاد آخر عنصر (الذي يشير إلى head)//
+    newNode->Prod = p;//نسخ البيانات//
     Node *temp = head;
-    while (temp->next != head) {
+    while (temp->next != head) {//إيجاد آخر عقدة//
         temp = temp->next;
     }
-    temp->next = newNode;
+    temp->next = newNode;//ربط العقدة الجديدة في النهاية//
     newNode->next = head;
     return head;
 }
@@ -75,24 +60,24 @@ void displayList(Node *head) {
     do {
         printf("ID: %d | Name: %s | Price: %d\n",temp->Prod.ID, temp->Prod.Name, temp->Prod.Price);
         temp = temp->next;
-    } while (temp != head); // نتوقف عندما نعود إلى البداية
+    } while (temp != head); // نتوقف عندما نعود إلى البداية//
 }
 //تحرير كل الذاكرة المستخدمة
 void freeList(Node *head) {
     if (head == NULL) return;
     Node *cur = head->next;
-    Node *nextNode;
-    while (cur != head) {
-        nextNode = cur->next;
-        free(cur);
-        cur = nextNode;
+    Node *temp;
+    while (cur != head) {//تحرير كل العقد ما عدا الرأس//
+        temp = cur;
+        cur = cur->next;
+        free(temp);
     }
     free(head); // نحرر العقدة الأولى أيضاً
 }
 int main() {
-    Node *head = createEmptyList();  // نبدأ بقائمة فارغة
-    p1 ={1,"milk",50};
-    p2 ={2,"sugar",80};
+    Node *head = createEmptyList();  // نبدأ بقائمة فارغة//
+    P1 ={1,"milk",50};
+    P2 ={2,"sugar",80};
     head = insertAtBeginning(head,p1);// إدراج في البداية//
     head = insertAtEnd(head,p2);// إدراج في النهاية//
     printf("the list:\n");
