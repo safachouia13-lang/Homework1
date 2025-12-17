@@ -63,18 +63,6 @@ void displayList(Node *head) {
         temp = temp->next;
     } while (temp != head); // نتوقف عندما نعود إلى البداية//
 }
-//تحرير كل الذاكرة المستخدمة
-void freeList(Node *head) {
-    if (head == NULL) return;
-    Node *cur = head->next;
-    Node *temp;
-    while (cur != head) {//تحرير كل العقد ما عدا الرأس//
-        temp = cur;
-        cur = cur->next;
-        free(temp);
-    }
-    free(head); // نحرر العقدة الأولى أيضاً
-}
 int main() {
     Node *head = createEmptyList();  // نبدأ بقائمة فارغة//
     Product p1 = {1 ,"milk", 50};
@@ -83,6 +71,5 @@ int main() {
     head = insertAtEnd(head,p2);// إدراج في النهاية//
     printf("the list:\n");
     displayList(head); // عرض الكل مرة واحدة//
-    freeList(head);//تحرير الذاكرة//
     return 0;
 }
